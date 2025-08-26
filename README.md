@@ -20,5 +20,14 @@
 - DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
 ### Power Apps
 - There are 2 types: Canvas apps, Model-driven apps
-- "Component" is like components in ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
+- "Component" is like components in  ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
 - Formula can even be used for properties, like Font size, Font style, so on. Just click on the property on the right panel, and change write formula.
+
+
+- To create model-driven apps, we either create from:
+  - Table Views. and publish them
+  - Table Forms. The table should have at least one "main" type form to be able t display as app
+    - Main view can have even Canvas app in it.
+  - Table Charts. Like Pie charts, so on
+  - Table Dashboards. Are combinations of charts and streams (Table views)
+- In model-driven create app, try to play with Groups, Navigation bar, Areas, Sub areas, so on.
