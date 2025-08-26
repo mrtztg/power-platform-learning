@@ -18,3 +18,7 @@
   - Workflows needs to be attached to a table. Workflow doesn't run on background, you can see it. This is the reason the platform recommends you to use Power Automate instead
   - Actions can be not attached to a table. They run whenever trigger them. Action creates a message whenever gets trigerred. This message can have input and output 
 - DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
+### Power Apps
+- There are 2 types: Canvas apps, Model-driven apps
+- "Component" is like components in ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
+- Formula can even be used for properties, like Font size, Font style, so on. Just click on the property on the right panel, and change write formula.
