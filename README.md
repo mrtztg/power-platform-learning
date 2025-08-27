@@ -72,7 +72,7 @@
 ### [Power Pages](https://make.powerpages.microsoft.com)
 
 
- ### [Copilot Studio](https://copilotstudio.microsoft.com)
+### [Copilot Studio](https://copilotstudio.microsoft.com)
 - With this, we can create AI Agents, like customised ChatGPT. Something that our customers can chat with; Like:
   - Website Q&A
   - Team Navigator (Assist employees to find colleagues)
@@ -84,3 +84,29 @@
 - Duirng agent setup, we can define knowledge base system; Means where this agent should get its additional knowledge from. For example, our website's document, or customer PDFs, so on.
 
 - We can use either templates, or Copilot prompt to create our Agent
+
+### AI Hub
+
+- AI models here are ready to use, and doesn't need programming knowledge
+- Allows you to use AI in your Power Apps, even sometimes in Power Automate
+- There are lots of ready to use AI models, like:
+  - Extract text from images (like bill information)
+  - Business card reader
+  - Detect objects in a image (like number of cats in the image)
+  - Classify customer feedback into predefined categories
+
+- To use AIs in Canvas apps, Model-driven apps or Power Automate, look for "AI Builder" button in any of those services.
+
+### Security
+
+- In Admin Center, there is Security Roles area. We use roles to define access level of teams and users. Like
+  - Basic User: Just create apps, add rows, ...
+  - Delegate User: Can act on behalf of another user
+  - System Administrator: Can to anything
+  - System Customizer: Similar to System Administrator, but is allowed to see data in the table you create
+  - Environment Admin: Permission to do all administrative actions, including adding users, provision Dataverse, so on
+  - Environment Maker: To create Apps, Flows, Gateways, connectors, so on. But not accessing data.
+
+- Azure Identity Services. Which are 200+ services. We can use them for managing the access to our Power Apps, Power automate, so on. One of them is Azure Active Directory.
+
+- "Power Platform Admin Center" is for setup accesses (account who has access to what) is for all Power Platform services, including Power Apps, Power Automate, so on
