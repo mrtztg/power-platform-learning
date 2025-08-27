@@ -18,6 +18,7 @@
   - Workflows needs to be attached to a table. Workflow doesn't run on background, you can see it. This is the reason the platform recommends you to use Power Automate instead
   - Actions can be not attached to a table. They run whenever trigger them. Action creates a message whenever gets trigerred. This message can have input and output 
 - DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
+- If the data is in our machine (like spreadsheet) and we want to setup auto refresh, we should setup a **Gateway**. 
 ### Power Apps
 - There are 2 types: Canvas apps, Model-driven apps
 - "Component" is like components in  ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
@@ -31,9 +32,24 @@
   - Table Charts. Like Pie charts, so on
   - Table Dashboards. Are combinations of charts and streams (Table views)
 - In model-driven create app, try to play with Groups, Navigation bar, Areas, Sub areas, so on.
+- In Tables, We can import data from many sources, like Spreadsheets. In "Import" wizard, we'll also have PowerQuery to manipulate the data. In progress import, will be displayed in "DataFlows" tab in dashboard.
+  - "Import data from Spreadsheet" option adds data to existing flow, but "import data with DataFlows" creates a new table
 
 - Copilot can be used in many Areas in Power Platform. Like
   - on Home screen for planning and creating
   - in Tables to create tables
   - in Apps to create app
   - Even inside the app, you can use Copilot to make changes on the app
+  - Even it can use formulas wherever there is a formula
+
+
+### Power Automate
+- It is very much like Zapier, but completely integrated to lots of services especially Microsoft services. Like Zapier, Power Automate also has lots of ready to use templates.
+- We can share a flow with other person to be able to both edit/run (co-owner) or job view (read only users). We can also send a copy.
+- Other than hundreds of connectors (templates), we can create our own custom connector (Like an API). But if we want this connector to be used by people outside our company, we should submit it to get certified by Microsoft (for free).
+- Two exciting use case of flows are:
+  - **Approval**: Create > Automated cloud flow > When a row added, ... to Dataverse.
+    - With this flow, we can create an approval on Dataverse modification. Flow will send approval request email to the managers (or anyone we define)
+    There are other approvals in Create>Templates as well.
+  - **Business Process Flow**: With this, we can define multi step process when for instance new row added to the table.
+    - Solutions on left menu > the solution (like Default) > New > Automation > Process > Business Process Flow 
