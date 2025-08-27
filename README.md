@@ -109,4 +109,18 @@
 
 - Azure Identity Services. Which are 200+ services. We can use them for managing the access to our Power Apps, Power automate, so on. One of them is Azure Active Directory.
 
+**DLP (Data Loss Prevention Policies)**
+- We can define them from Platform Admin Center > Data Policies
+- DLP helps to prevent companies' data to get publically accessed accidentally. It does this by stricting access to connectors.
+- Environment Admin or Tanent Admin can create Data Policies. 
+- We can't block Microsoft 365 services, like SharePoint, Dataverse, Notifications, Approvals, Excel, OneDrive.
+- During DLP Creation, if we move one connector (like Common Data Source) to "Business" group, it stops the data being shared with connectors in "Non-Business" group, or in other words a connector from "Business" group can't connect to connector from "Non-business" group. Because for example we don't want our data in CDS be shared with connectors in other group.
+- When we move a connector to "Blocked" group, means "don't use this connector"
+
+### Settings
+
 - "Power Platform Admin Center" is for setup accesses (account who has access to what) is for all Power Platform services, including Power Apps, Power Automate, so on
+  - We can even see analytics here, like tables usages, capacities, so on.
+  - Even Data Integration
+  - Billings and other settings
+- 
