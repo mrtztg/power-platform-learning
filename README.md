@@ -19,7 +19,7 @@
   - Actions can be not attached to a table. They run whenever trigger them. Action creates a message whenever gets trigerred. This message can have input and output 
 - DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
 - If the data is in our machine (like spreadsheet) and we want to setup auto refresh, we should setup a **Gateway**. 
-### Power Apps
+### [Power Apps](https://make.powerapps.com)
 - There are 2 types: Canvas apps, Model-driven apps
 - "Component" is like components in  ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
 - Formula can even be used for properties, like Font size, Font style, so on. Just click on the property on the right panel, and change write formula.
@@ -43,7 +43,7 @@
   - Even it can use formulas wherever there is a formula
 
 
-### Power Automate
+### [Power Automate](https://make.powerautomate.com)
 - It is very much like Zapier, but completely integrated to lots of services especially Microsoft services. Like Zapier, Power Automate also has lots of ready to use templates.
 - We can share a flow with other person to be able to both edit/run (co-owner) or job view (read only users). We can also send a copy.
 - Other than hundreds of connectors (templates), we can create our own custom connector (Like an API). But if we want this connector to be used by people outside our company, we should submit it to get certified by Microsoft (for free).
@@ -68,3 +68,19 @@
   - Identify inefficiency in creating the product and customer service desk
   - Identify ways to reduce works
 - In addition, Task Mining can analyse work and suggest improvements
+
+### [Power Pages](https://make.powerpages.microsoft.com)
+
+
+ ### [Copilot Studio](https://copilotstudio.microsoft.com)
+- With this, we can create AI Agents, like customised ChatGPT. Something that our customers can chat with; Like:
+  - Website Q&A
+  - Team Navigator (Assist employees to find colleagues)
+  - Store Operations
+  - Weather assistant
+  - Citizen services
+  - Personalised benefits agent, so on.
+
+- Duirng agent setup, we can define knowledge base system; Means where this agent should get its additional knowledge from. For example, our website's document, or customer PDFs, so on.
+
+- We can use either templates, or Copilot prompt to create our Agent
