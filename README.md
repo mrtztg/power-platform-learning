@@ -18,3 +18,22 @@
   - Workflows needs to be attached to a table. Workflow doesn't run on background, you can see it. This is the reason the platform recommends you to use Power Automate instead
   - Actions can be not attached to a table. They run whenever trigger them. Action creates a message whenever gets trigerred. This message can have input and output 
 - DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
+### Power Apps
+- There are 2 types: Canvas apps, Model-driven apps
+- "Component" is like components in  ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
+- Formula can even be used for properties, like Font size, Font style, so on. Just click on the property on the right panel, and change write formula.
+- Once you made some changes on a published canvas app, don't forget to publish to new version. For this, we can even right click on the app on apps list > details > versions. And publish the app. We can even restore to previous version from there.
+
+- To create model-driven apps, we either create from:
+  - Table Views. and publish them
+  - Table Forms. The table should have at least one "main" type form to be able t display as app
+    - Main view can have even Canvas app in it.
+  - Table Charts. Like Pie charts, so on
+  - Table Dashboards. Are combinations of charts and streams (Table views)
+- In model-driven create app, try to play with Groups, Navigation bar, Areas, Sub areas, so on.
+
+- Copilot can be used in many Areas in Power Platform. Like
+  - on Home screen for planning and creating
+  - in Tables to create tables
+  - in Apps to create app
+  - Even inside the app, you can use Copilot to make changes on the app
