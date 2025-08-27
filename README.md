@@ -52,4 +52,19 @@
     - With this flow, we can create an approval on Dataverse modification. Flow will send approval request email to the managers (or anyone we define)
     There are other approvals in Create>Templates as well.
   - **Business Process Flow**: With this, we can define multi step process when for instance new row added to the table.
-    - Solutions on left menu > the solution (like Default) > New > Automation > Process > Business Process Flow 
+    - Solutions on left menu > the solution (like Default) > New > Automation > Process > Business Process Flow .
+- Using Desktop version of Power Automate, we can do even more including UI automation (using recorder), like Opening Google sheets, fill the fields, so on.
+
+
+- We can even ask Copilot (in Home menu of Power Automate) to create Flow for us, and edit it if needed
+
+- **Process Mininig**: This feature (on left menu) creates flows for us to display how the process of somethings goes. For example, how was the process of Customer refund in our DB
+![Refund table](assets/refund-table.png)
+![Process Mining Sample](assets/process-mining-sample.png)
+
+- To see use cases of Process Mining, go to Process Mining templates. Cases like:
+  - Stream like of activation in Telecommunication
+  - Decrease the impact of supply chain in manufacture
+  - Identify inefficiency in creating the product and customer service desk
+  - Identify ways to reduce works
+- In addition, Task Mining can analyse work and suggest improvements
