@@ -28,10 +28,11 @@
 - To create model-driven apps, we either create from:
   - Table Views. and publish them
   - Table Forms. The table should have at least one "main" type form to be able t display as app
-    - Main view can have even Canvas app in it.
+    - Main view can even have Canvas app in it.
   - Table Charts. Like Pie charts, so on
   - Table Dashboards. Are combinations of charts and streams (Table views)
 - In model-driven create app, try to play with Groups, Navigation bar, Areas, Sub areas, so on.
+- Model-driven apps can only use Dataverse as database.
 - In Tables, We can import data from many sources, like Spreadsheets. In "Import" wizard, we'll also have PowerQuery to manipulate the data. In progress import, will be displayed in "DataFlows" tab in dashboard.
   - "Import data from Spreadsheet" option adds data to existing flow, but "import data with DataFlows" creates a new table
 
@@ -106,6 +107,11 @@
   - System Customizer: Similar to System Administrator, but is allowed to see data in the table you create
   - Environment Admin: Permission to do all administrative actions, including adding users, provision Dataverse, so on
   - Environment Maker: To create Apps, Flows, Gateways, connectors, so on. But not accessing data.
+
+- Data Governance capabilities:
+  - Environments (which defines scope), and permissions withing environment
+  - DLPs
+  - Conditional Access Policies: for block like base on user, location, so on
 
 - Azure Identity Services. Which are 200+ services. We can use them for managing the access to our Power Apps, Power automate, so on. One of them is Azure Active Directory.
 
