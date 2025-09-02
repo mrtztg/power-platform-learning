@@ -1,4 +1,4 @@
-# Power Platform — Complete, Practical Tutorial (Markdown)
+# Power Platform — Complete, Practical Tutorial
 
 > **Goal:** Learn Power BI, Power Apps, Dataverse, Power Pages, Power Automate, Copilot Studio/AI Builder, and security/governance.
 > **Style:** Simple English. Short steps. Lots of examples.
@@ -8,7 +8,7 @@
 
 ## Table of Contents
 
-- [Power Platform — Complete, Practical Tutorial (Markdown)](#power-platform--complete-practical-tutorial-markdown)
+- [Power Platform — Complete, Practical Tutorial](#power-platform--complete-practical-tutorial)
   - [Table of Contents](#table-of-contents)
   - [What is Microsoft Power Platform?](#what-is-microsoft-power-platform)
   - [Setup \& Environments](#setup--environments)
@@ -40,8 +40,7 @@
     - [Power Query M (Dataflows/Power BI)](#power-query-m-dataflowspower-bi)
   - [Troubleshooting — Common Errors](#troubleshooting--common-errors)
   - [Glossary](#glossary)
-  - [Extra Notes (from your draft, corrected \& merged)](#extra-notes-from-your-draft-corrected--merged)
-    - [Your Next Steps](#your-next-steps)
+  - [Extra Notes](#extra-notes)
 
 ---
 
@@ -511,7 +510,7 @@ in
 
 ---
 
-## Extra Notes (from your draft, corrected & merged)
+## Extra Notes
 
 * **Power BI Workspaces vs Apps:** workspaces are for building; **Apps** are for publishing to many users.
 * **Dataverse “Business Rules”, not “Roles”:** use to set/clear/require fields and show/hide on forms.
@@ -520,15 +519,3 @@ in
 * **Gateway:** needed for refresh of local files or on-prem databases.
 * **Publish versions:** after you edit a Canvas app, **Publish** so users get the new version.
 * **Copilot:** you can use Copilot in many places — in home, when creating tables/apps, and even inside apps.
-
----
-
-### Your Next Steps
-
-1. Create Dev/Test/Prod environments.
-2. Build the **Leave Request** solution in Dev (tables, apps, flows).
-3. Add a small **Power BI** report.
-4. Publish a **Power Pages** site for external submission.
-5. Set **DLP**, roles, and **Pipeline** to move to Prod.
-
-If you want, say **“export this as a file”**, and I’ll give you a downloadable `.md` copy.
