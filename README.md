@@ -1,132 +1,534 @@
-# power-platform-learning
-### Power BI Service Terminology
-![power bi terminology](assets/power-bi-terminology.png)
+# Power Platform — Complete, Practical Tutorial (Markdown)
+
+> **Goal:** Learn Power BI, Power Apps, Dataverse, Power Pages, Power Automate, Copilot Studio/AI Builder, and security/governance.
+> **Style:** Simple English. Short steps. Lots of examples.
+> **What you will build:** a small business solution for *Leave Requests* (end-to-end).
+
+---
+
+## Table of Contents
+
+- [Power Platform — Complete, Practical Tutorial (Markdown)](#power-platform--complete-practical-tutorial-markdown)
+  - [Table of Contents](#table-of-contents)
+  - [What is Microsoft Power Platform?](#what-is-microsoft-power-platform)
+  - [Setup \& Environments](#setup--environments)
+  - [Dataverse (Core Data Layer)](#dataverse-core-data-layer)
+    - [Key Concepts (with fixes to notes)](#key-concepts-with-fixes-to-notes)
+    - [Minimal Build Steps](#minimal-build-steps)
+    - [Exercises](#exercises)
+  - [Power Apps](#power-apps)
+    - [Canvas Apps](#canvas-apps)
+    - [Model-driven Apps](#model-driven-apps)
+  - [Power Automate](#power-automate)
+  - [Power BI](#power-bi)
+  - [Power Pages](#power-pages)
+  - [Copilot Studio \& AI Builder (AI Hub)](#copilot-studio--ai-builder-ai-hub)
+    - [Copilot Studio (formerly Power Virtual Agents)](#copilot-studio-formerly-power-virtual-agents)
+    - [AI Builder / AI Hub](#ai-builder--ai-hub)
+  - [Security \& Governance](#security--governance)
+    - [Roles \& Access](#roles--access)
+    - [Dataverse Security Layers](#dataverse-security-layers)
+    - [DLP — Data Loss Prevention](#dlp--data-loss-prevention)
+    - [Conditional Access \& Managed Environments](#conditional-access--managed-environments)
+  - [ALM: Solutions, Managed vs Unmanaged, Pipelines, DevOps](#alm-solutions-managed-vs-unmanaged-pipelines-devops)
+  - [Integration \& Data (Dataflows, Gateways, Connectors)](#integration--data-dataflows-gateways-connectors)
+  - [Admin \& Monitoring](#admin--monitoring)
+  - [End-to-End Project: Leave Request](#end-to-end-project-leave-request)
+  - [Cheat Sheets (Power Fx, Flow expressions, Power Query M)](#cheat-sheets-power-fx-flow-expressions-power-query-m)
+    - [Power Fx (Canvas)](#power-fx-canvas)
+    - [Power Automate Expressions](#power-automate-expressions)
+    - [Power Query M (Dataflows/Power BI)](#power-query-m-dataflowspower-bi)
+  - [Troubleshooting — Common Errors](#troubleshooting--common-errors)
+  - [Glossary](#glossary)
+  - [Extra Notes (from your draft, corrected \& merged)](#extra-notes-from-your-draft-corrected--merged)
+    - [Your Next Steps](#your-next-steps)
+
+---
+
+## What is Microsoft Power Platform?
+
+A low-code platform to build apps, automations, websites, and analytics:
+
+* **Dataverse:** Secure cloud database for business data.
+* **Power Apps:** Build apps (Canvas or Model-driven).
+* **Power Automate:** Automate tasks and workflows.
+* **Power BI:** Reports and dashboards.
+* **Power Pages:** Secure external website/portal.
+* **Copilot Studio / AI Builder:** Add AI to your apps and flows.
+
+**When to use what**
+
+* Need a quick form or mobile app → **Canvas app**.
+* Need standard data screens (lists, forms, charts) with security by roles → **Model-driven app** on **Dataverse**.
+* Need process automation or approvals → **Power Automate**.
+* Need reporting and KPIs → **Power BI**.
+* Need a public or partner site → **Power Pages**.
+* Need chat or AI skills → **Copilot Studio** and **AI Builder**.
+
+---
+
+## Setup & Environments
+
+1. Go to **Power Platform Admin Center** → create environments:
+
+   * **Dev** (makers build here)
+   * **Test** (UAT)
+   * **Prod** (live)
+2. Enable **Dataverse** in Dev/Test/Prod if you will use it.
+3. Give users **Security Roles** (see [Security](#security--governance)).
+4. Plan **ALM** (Application Lifecycle Management):
+
+   * Build in **Dev** → export **Solution** → import to **Test/Prod** (managed).
+
+> **Tip:** Start small. One environment for Dev, one for Prod is OK at first.
+
+---
+
+## Dataverse (Core Data Layer)
+
+Dataverse stores tables, columns, relationships, and rules.
+
+### Key Concepts (with fixes to notes)
+
+* **Solutions:** Containers to move components between environments.
+
+  * **Managed** (locked) → ideal for **Prod/Test**.
+  * **Unmanaged** (editable) → use in **Dev**.
+* **Ownership (table setting):**
+
+  * **Organisation-owned:** permissions at organisation level.
+  * **User or Team-owned:** record-level security by user/team.
+* **Business Rules** (not “Business Roles”): set rules for form/field logic (show/hide, set values).
+* **Workflows & Actions (classic):** real-time or background processes.
+
+  * Today, **Power Automate** is recommended for most automation.
+  * **Actions** can be reusable operations with inputs/outputs (called from apps/flows).
+* **Dataflows:** get data from sources (Excel, SQL, Azure, etc.), transform in **Power Query**, load to Dataverse.
+* **Gateway:** needed for on-premises data refresh (files/DBs on your network).
+
+### Minimal Build Steps
+
+1. **Create a Solution** in Dev (e.g., `LeaveSolution`).
+2. **Create Tables**, e.g., `LeaveRequest`, `Employee`, `Manager`.
+3. Define **columns**, **relationships**, and **views/forms**.
+4. Add **Business Rules** for simple logic (e.g., if Type = “Sick”, make `Note` required).
+5. Add **Dataflows** if you need to import data.
+
+### Exercises
+
+* Create a `LeaveRequest` table with columns:
+
+  * `Employee` (lookup), `FromDate` (date), `ToDate` (date),
+    `Type` (choice), `Reason` (text), `Status` (choice: Draft/Pending/Approved/Rejected).
+* Add a **Business Rule:** if `FromDate` > `ToDate` → show error.
+* Import employees from Excel using a **Dataflow**.
+
+---
 
 ## Power Apps
-- **Workspaces**: Is more for collaborating with the team
-- **Apps vs Workspaces**: Any change on Workspace will be directly reflected for anyone in Workspace. But apps will reflect the latest version when we publish it.
 
-### Dataverse
-- Solutions are like packages to move from one environment to another. E.g when we create PROD environment, we create a solution in dev environment, put things need to copy inside solution and then copy then to production.
-- Managed solutions is like locked solution. We can't modify components inside it. It's good for PROD or test environment. When we export a solution, we can define whether it gets exported as managed or unmanaged. But for unmanaged, we can modify components. Also, when we delete the unmanaged solution, only the container (the solution itself) gets deleted, not the inside.
-- When we create a table in Dataverse, we can define Ownership:
-  - Oragnisation: Then the table will be controlled by oraganisation
-  - User or Team: Then data and records in user level
-- "Business Roles" is useful when we want to defines some rules on table. Like if field value was "Unkown", change it to something else, if hide it, or don't let to be shown, etc.
-- Realtime Workflow and actions are for make the platform do something (like send email, change something, so on) when something happened (like the row changed, record assigned to someone, so on)
-  - Find out both these options in: Choose a Solution > New > Automation > Process. 
-  - Workflows needs to be attached to a table. Workflow doesn't run on background, you can see it. This is the reason the platform recommends you to use Power Automate instead
-  - Actions can be not attached to a table. They run whenever trigger them. Action creates a message whenever gets trigerred. This message can have input and output 
-- DataFlaws: Is for get data from a source (like spreadsheet, Azure, so on), Transform it (in Power Query) and then export it.
-- If the data is in our machine (like spreadsheet) and we want to setup auto refresh, we should setup a **Gateway**. 
-### [Power Apps](https://make.powerapps.com)
-- There are 2 types: Canvas apps, Model-driven apps
-- "Component" is like components in  ReactJS. We can export components and give them to our colleagues; but they can't edit a component. It's like a blackbox
-- Formula can even be used for properties, like Font size, Font style, so on. Just click on the property on the right panel, and change write formula.
-- Once you made some changes on a published canvas app, don't forget to publish to new version. For this, we can even right click on the app on apps list > details > versions. And publish the app. We can even restore to previous version from there.
+### Canvas Apps
 
-- To create model-driven apps, we either create from:
-  - Table Views. and publish them
-  - Table Forms. The table should have at least one "main" type form to be able t display as app
-    - Main view can even have Canvas app in it.
-  - Table Charts. Like Pie charts, so on
-  - Table Dashboards. Are combinations of charts and streams (Table views)
-- In model-driven create app, try to play with Groups, Navigation bar, Areas, Sub areas, so on.
-- Model-driven apps can only use Dataverse as database.
-- In Tables, We can import data from many sources, like Spreadsheets. In "Import" wizard, we'll also have PowerQuery to manipulate the data. In progress import, will be displayed in "DataFlows" tab in dashboard.
-  - "Import data from Spreadsheet" option adds data to existing flow, but "import data with DataFlows" creates a new table
+* Drag-and-drop UI. Use **Power Fx** formulas (Excel-like).
+* Data sources: Dataverse, SharePoint, SQL, Excel, etc.
+* **Components:** reusable UI units (like React components). You can export/import.
+  Others can use, but may not edit inside your component (black-box idea).
 
-- Copilot can be used in many Areas in Power Platform. Like
-  - on Home screen for planning and creating
-  - in Tables to create tables
-  - in Apps to create app
-  - Even inside the app, you can use Copilot to make changes on the app
-  - Even it can use formulas wherever there is a formula
+**Quick Start**
 
+1. `make.powerapps.com` → **Apps** → **New app** → **Canvas**.
+2. Add **Data** → choose **Dataverse** table `LeaveRequest`.
+3. Insert **Edit Form**, set **DataSource** = `LeaveRequest`.
+4. Use formulas for behaviour, e.g.:
 
-### [Power Automate](https://make.powerautomate.com)
-- It is very much like Zapier, but completely integrated to lots of services especially Microsoft services. Like Zapier, Power Automate also has lots of ready to use templates.
-- We can share a flow with other person to be able to both edit/run (co-owner) or job view (read only users). We can also send a copy.
-- Other than hundreds of connectors (templates), we can create our own custom connector (Like an API). But if we want this connector to be used by people outside our company, we should submit it to get certified by Microsoft (for free).
-- Two exciting use case of flows are:
-  - **Approval**: Create > Automated cloud flow > When a row added, ... to Dataverse.
-    - With this flow, we can create an approval on Dataverse modification. Flow will send approval request email to the managers (or anyone we define)
-    There are other approvals in Create>Templates as well.
-  - **Business Process Flow**: With this, we can define multi step process when for instance new row added to the table.
-    - Solutions on left menu > the solution (like Default) > New > Automation > Process > Business Process Flow .
-- Using Desktop version of Power Automate, we can do even more including UI automation (using recorder), like Opening Google sheets, fill the fields, so on.
+   ```powerfx
+   // Save button
+   SubmitForm(EditForm1);
+   Notify("Saved", NotificationType.Success)
+   ```
+5. Publish new version: **File → Save → Publish** (or App list → … → **Details** → **Versions**).
 
+**Tips**
 
-- We can even ask Copilot (in Home menu of Power Automate) to create Flow for us, and edit it if needed
+* You can set formulas on properties (size, visible, color, etc.).
+* Use **Copilot** to create screens or write formulas faster.
 
-- **Process Mininig**: This feature (on left menu) creates flows for us to display how the process of somethings goes. For example, how was the process of Customer refund in our DB
-![Refund table](assets/refund-table.png)
-![Process Mining Sample](assets/process-mining-sample.png)
+### Model-driven Apps
 
-- To see use cases of Process Mining, go to Process Mining templates. Cases like:
-  - Stream like of activation in Telecommunication
-  - Decrease the impact of supply chain in manufacture
-  - Identify inefficiency in creating the product and customer service desk
-  - Identify ways to reduce works
-- In addition, Task Mining can analyse work and suggest improvements
+* Auto-generated UI based on **Dataverse** tables.
+* Strong security, good for complex data and processes.
 
-### [Power Pages](https://make.powerpages.microsoft.com)
+**Create Steps**
 
+1. Create tables (already done above).
+2. Ensure each table has a **Main form** and at least one **View**.
+3. **Apps → New app → Model-driven**. Add **Areas**, **Groups**, **Sub-areas** (tables, dashboards, charts).
+4. Add **Dashboards/Charts** using table data.
+5. Publish app.
 
-### [Copilot Studio](https://copilotstudio.microsoft.com)
-- With this, we can create AI Agents, like customised ChatGPT. Something that our customers can chat with; Like:
-  - Website Q&A
-  - Team Navigator (Assist employees to find colleagues)
-  - Store Operations
-  - Weather assistant
-  - Citizen services
-  - Personalised benefits agent, so on.
+**Notes**
 
-- Duirng agent setup, we can define knowledge base system; Means where this agent should get its additional knowledge from. For example, our website's document, or customer PDFs, so on.
+* Model-driven apps work **only with Dataverse**.
+* You can embed a **Canvas app** in a Model-driven form (advanced).
 
-- We can use either templates, or Copilot prompt to create our Agent
+**Exercise**
 
-### AI Hub
+* Build a Model-driven app named `LeaveAdmin`. Include:
 
-- AI models here are ready to use, and doesn't need programming knowledge
-- Allows you to use AI in your Power Apps, even sometimes in Power Automate
-- There are lots of ready to use AI models, like:
-  - Extract text from images (like bill information)
-  - Business card reader
-  - Detect objects in a image (like number of cats in the image)
-  - Classify customer feedback into predefined categories
+  * `LeaveRequest` views, forms, charts (e.g., requests by status).
+  * A dashboard that shows pending approvals.
 
-- To use AIs in Canvas apps, Model-driven apps or Power Automate, look for "AI Builder" button in any of those services.
+---
 
-### Security
+## Power Automate
 
-- In Admin Center, there is Security Roles area. We use roles to define access level of teams and users. Like
-  - Basic User: Just create apps, add rows, ...
-  - Delegate User: Can act on behalf of another user
-  - System Administrator: Can to anything
-  - System Customizer: Similar to System Administrator, but is allowed to see data in the table you create
-  - Environment Admin: Permission to do all administrative actions, including adding users, provision Dataverse, so on
-  - Environment Maker: To create Apps, Flows, Gateways, connectors, so on. But not accessing data.
+* Build flows (like Zapier, but deep with Microsoft).
+* Share flows as **co-owner** (edit/run) or **read-only**.
+* **Custom connectors**: wrap your API; can be certified for public use.
 
-- Data Governance capabilities:
-  - Environments (which defines scope), and permissions withing environment
-  - DLPs
-  - Conditional Access Policies: for block like base on user, location, so on
+**Common Patterns**
 
-- Azure Identity Services. Which are 200+ services. We can use them for managing the access to our Power Apps, Power automate, so on. One of them is Azure Active Directory.
+* **Approval Flow:**
+  Trigger: *When a row is added in Dataverse* → **Start and wait for an approval** → set `Status` based on approve/reject → notify by email/Teams.
+* **Business Process Flow** (BPF):
+  Multi-stage process for a table record (e.g., Draft → Pending → Approved).
 
-**DLP (Data Loss Prevention Policies)**
-- We can define them from Platform Admin Center > Data Policies
-- DLP helps to prevent companies' data to get publically accessed accidentally. It does this by stricting access to connectors.
-- Environment Admin or Tanent Admin can create Data Policies. 
-- We can't block Microsoft 365 services, like SharePoint, Dataverse, Notifications, Approvals, Excel, OneDrive.
-- During DLP Creation, if we move one connector (like Common Data Source) to "Business" group, it stops the data being shared with connectors in "Non-Business" group, or in other words a connector from "Business" group can't connect to connector from "Non-business" group. Because for example we don't want our data in CDS be shared with connectors in other group.
-- When we move a connector to "Blocked" group, means "don't use this connector"
+**Desktop (RPA):** record UI actions on your PC (open apps, copy/paste, etc.).
 
-### Settings
+**Process Mining & Task Mining**
 
-- "Power Platform Admin Center" is for setup accesses (account who has access to what) is for all Power Platform services, including Power Apps, Power Automate, so on
-  - We can even see analytics here, like tables usages, capacities, so on.
-  - Even Data Integration
-  - Billings and other settings
-- 
+* Discover how a process really works. Show bottlenecks.
+* Use **Process Mining templates** to start.
+
+**Exercise**
+
+* Build a flow: When `LeaveRequest.Status` changes to *Pending*, send approval to the manager.
+  On approve → set to *Approved*, else *Rejected*. Send email to requestor.
+
+---
+
+## Power BI
+
+> *Your note “Workspaces vs Apps” belongs to Power BI.*
+
+* **Workspace:** place to build and share content with your team.
+* **App:** a packaged, read-only view of reports/dashboards published **from a workspace** for a wider audience. Changes in the workspace show in the **App** only **after you publish the app** again.
+
+**Key Terms (Service)**
+
+* **Dataset / Semantic model** (in Microsoft Fabric), **Report**, **Dashboard**, **Workspace**, **App**, **Dataflow** (Power Query online), **Gateway** (for on-prem data).
+
+**Quick Steps**
+
+1. Build report in **Power BI Desktop** (connect to Dataverse or SQL).
+2. Publish to a **Workspace**.
+3. Create an **App** from that workspace for end users.
+4. Set **Refresh** schedules (Gateway if on-premises).
+
+**Exercise**
+
+* Create a report “Leave KPIs”:
+
+  * Cards: Pending count, Approved this month.
+  * Bar chart: Requests by Type.
+  * Line chart: Requests over time.
+    Publish and create a simple App.
+
+---
+
+## Power Pages
+
+* Public or partner-facing website with secure login (Azure AD, external users).
+* Works well with **Dataverse**.
+
+**Quick Steps**
+
+1. `make.powerpages.microsoft.com` → **Create** (choose a template).
+2. Connect pages and forms to **Dataverse** tables (e.g., submit a Leave Request).
+3. Set **Web roles** and **Table permissions** for who can view/edit records.
+4. Theme and publish.
+
+**Exercise**
+
+* Add a “Submit Leave” page bound to `LeaveRequest` table.
+* Add a “My Requests” list for logged-in user.
+
+---
+
+## Copilot Studio & AI Builder (AI Hub)
+
+### Copilot Studio (formerly Power Virtual Agents)
+
+* Build a chatbot/agent with topics and generative answers.
+* Add a **knowledge source** (website, files) for Q\&A.
+* Expose the bot in Teams, web, or your site.
+
+**Exercise**
+
+* Create a “Leave Helper” bot:
+
+  * Answers: leave policy, how to request.
+  * Action: create a leave request by calling a Power Automate flow.
+
+### AI Builder / AI Hub
+
+* Ready-to-use AI models (no code). Examples:
+
+  * **Document processing** (extract fields from invoices/bills).
+  * **Business card reader**.
+  * **Object detection**.
+  * **Text classification** and **sentiment**.
+
+**Use in Apps/Flows**
+
+* In Canvas apps: **Insert → AI Builder** control.
+* In Flows: **AI Builder** actions (e.g., “Extract information from documents”).
+
+---
+
+## Security & Governance
+
+### Roles & Access
+
+* **Security Roles** (in environment):
+
+  * **Basic User:** create/use own records.
+  * **Delegate:** act for another user.
+  * **System Customizer:** can customize and see data for their tables.
+  * **System Administrator:** full control.
+  * **Environment Admin / Maker:** admin or maker rights at environment level (maker can create apps/flows, not see all data by default).
+
+### Dataverse Security Layers
+
+* **Business Units & Teams**: structure your org and group users.
+* **User/Team-owned tables**: record-level permissions (own, business unit, org).
+* **Column-level security**: lock sensitive columns.
+* **Auditing**: track changes to tables/fields.
+* **Hierarchy security**: managers can see subordinates’ records.
+
+### DLP — Data Loss Prevention
+
+* Set in **Power Platform Admin Center → Data policies**.
+* Put connectors into:
+
+  * **Business** (allowed for internal/business data)
+  * **Non-Business** (separate group)
+  * **Blocked** (not allowed)
+* **Rule:** a connector in Business **cannot** share data with one in Non-Business.
+* You **cannot block** core Microsoft connectors like SharePoint, Dataverse, etc.
+
+### Conditional Access & Managed Environments
+
+* Use **Conditional Access** (Azure AD) — control by user, device, location.
+* **Managed Environments**: extra governance, sharing controls, and limits for large orgs.
+
+**Gateway Security**
+
+* On-premises data refresh uses **On-premises data gateway**.
+* Keep gateway hosts secure and updated.
+
+---
+
+## ALM: Solutions, Managed vs Unmanaged, Pipelines, DevOps
+
+* **Build** in **Unmanaged Solution** in Dev.
+* **Export** from Dev as:
+
+  * **Managed** for Test/Prod (locked)
+  * **Unmanaged** only for moving Dev-like work (not recommended to import unmanaged into Prod)
+* **Pipelines for Power Platform** (no/low-code ALM):
+
+  * Create pipeline → stages for **Dev → Test → Prod** → deploy the **solution** through stages.
+* **DevOps** (advanced):
+
+  * Power Platform CLI (`pac`), Git repos, build/release with Azure DevOps or GitHub Actions.
+  * Use **ALM Accelerator** (from CoE) if needed.
+
+**Exercise**
+
+* Package all app, flows, tables into a **Solution**.
+* Move Dev → Test → Prod with a **Pipeline**.
+
+---
+
+## Integration & Data (Dataflows, Gateways, Connectors)
+
+* **Dataflows** (Power Apps or Power BI) use **Power Query** to transform and load data.
+* **Gateway** for on-prem data refresh.
+* **Connectors**:
+
+  * Standard: SharePoint, Outlook, Teams, SQL, etc.
+  * **Custom connector**: wrap your REST API (OAuth/API key).
+* **Virtual Tables**: read external data in Dataverse without copying it (advanced).
+
+**Exercise**
+
+* Build a Dataflow that imports employees from a network file share (via Gateway) into Dataverse nightly.
+
+---
+
+## Admin & Monitoring
+
+* **Power Platform Admin Center**:
+
+  * Environment analytics, capacity, **Maker** activity.
+  * **Data policies** (DLP), **Data integration**, **Billing**.
+* **Solutions Health**: check missing dependencies before export.
+* **Flow run history**, **App Monitor** (Canvas) for performance issues.
+* **Audit logs** for security reviews.
+
+---
+
+## End-to-End Project: Leave Request
+
+**Goal:** One solution that covers app, automation, report, and portal.
+
+1. **Dataverse**
+
+   * Tables: `Employee`, `Manager`, `LeaveRequest`.
+   * Columns: as in Dataverse exercise.
+   * Business Rule: `FromDate` ≤ `ToDate`.
+
+2. **Model-driven app (LeaveAdmin)**
+
+   * Views: *My Team’s Pending*, *All Approved*.
+   * Chart: Requests by Type, by Month.
+
+3. **Canvas app (LeaveMobile)**
+
+   * Form to create a request.
+   * Gallery: *My Requests*.
+   * Button: `SubmitForm(EditForm1)` + `Notify()`.
+
+4. **Power Automate**
+
+   * Trigger: When `LeaveRequest` created or `Status` changes to *Pending*.
+   * Send manager **Approval**.
+   * Update `Status` and email result.
+
+5. **Power BI**
+
+   * Dataset from Dataverse `LeaveRequest`.
+   * Report with KPIs, trend, breakdown by type.
+   * Publish to workspace → publish **App**.
+
+6. **Power Pages**
+
+   * “Submit Leave” page (Dataverse form).
+   * “My Requests” list.
+   * Table permissions for signed-in users.
+
+7. **Security**
+
+   * Roles: `Employee`, `Manager`, `HR Admin`.
+   * DLP: block risky connectors (e.g., Twitter) for this environment.
+
+8. **ALM**
+
+   * Put all components into **Solution** `LeaveSolution`.
+   * Use **Pipeline** to deploy Dev → Test → Prod.
+
+---
+
+## Cheat Sheets (Power Fx, Flow expressions, Power Query M)
+
+### Power Fx (Canvas)
+
+```powerfx
+// Filter my requests
+Filter(LeaveRequest, Employee.Email = User().Email)
+
+// Validate date
+If(DateValue(FromDateInput.Text) > DateValue(ToDateInput.Text),
+   Notify("From date must be before To date", NotificationType.Error)
+);
+
+// Show control only for managers
+Visible: "Manager" in User().Email // simple demo; prefer role check via Dataverse
+
+// Patch (create) record
+Patch(LeaveRequest,
+      Defaults(LeaveRequest),
+      { Employee: LookUp(Employee, Email = User().Email),
+        FromDate: DatePickerFrom.SelectedDate,
+        ToDate: DatePickerTo.SelectedDate,
+        Type: DropdownType.Selected.Value,
+        Status: "Pending" }
+);
+```
+
+### Power Automate Expressions
+
+```text
+coalesce(triggerOutputs()?['body/Reason'], 'No reason provided')
+equals(items('Apply_to_each')?['Status'], 'Approved')
+formatDateTime(utcNow(), 'yyyy-MM-dd')
+if(greater(item()?['Days'], 10), 'Long', 'Short')
+```
+
+### Power Query M (Dataflows/Power BI)
+
+```m
+let
+  Source = Excel.Workbook(File.Contents("C:\HR\employees.xlsx"), true),
+  Table  = Source{[Item="Employees",Kind="Table"]}[Data],
+  Clean  = Table.TransformColumnTypes(Table,{{"StartDate", type date}}),
+  Keep   = Table.SelectRows(Clean, each [Active] = true)
+in
+  Keep
+```
+
+---
+
+## Troubleshooting — Common Errors
+
+* **“Connection refused [http://localhost](http://localhost) … kubernetes”**
+  Ensure you target the right cluster/URL. For Power Platform, check **Dataverse** connection and environment.
+* **Flow keeps failing on approval:**
+  Check the approver’s email, permissions, and if the row still exists. Look at **Run history** details.
+* **App changes not visible to users:**
+  You saved but did not **Publish** the latest version.
+* **Power BI report not updating:**
+  Configure **Refresh** and **Gateway** if data is on-premises.
+* **Cannot import solution to Prod:**
+  Export as **Managed**. Fix missing dependencies before export.
+
+---
+
+## Glossary
+
+* **Dataverse:** cloud database for business apps.
+* **Solution:** package of components to move between environments.
+* **Managed/Unmanaged:** locked vs editable solution.
+* **Canvas app:** pixel-perfect app with Power Fx.
+* **Model-driven app:** data-first app from Dataverse tables.
+* **Dataflow:** data import with Power Query.
+* **Gateway:** bridge for on-prem data.
+* **DLP:** Data Loss Prevention policies for connectors.
+* **BPF:** Business Process Flow (multi-stage path on a record).
+* **AI Builder:** ready AI models for apps/flows.
+* **Copilot Studio:** build chat/AI agents.
+
+---
+
+## Extra Notes (from your draft, corrected & merged)
+
+* **Power BI Workspaces vs Apps:** workspaces are for building; **Apps** are for publishing to many users.
+* **Dataverse “Business Rules”, not “Roles”:** use to set/clear/require fields and show/hide on forms.
+* **Real-time Workflows/Actions:** still exist, but **Power Automate** is preferred for most cases.
+* **Dataflows (not “DataFlaws”):** import/transform/load data into Dataverse or Power BI.
+* **Gateway:** needed for refresh of local files or on-prem databases.
+* **Publish versions:** after you edit a Canvas app, **Publish** so users get the new version.
+* **Copilot:** you can use Copilot in many places — in home, when creating tables/apps, and even inside apps.
+
+---
+
+### Your Next Steps
+
+1. Create Dev/Test/Prod environments.
+2. Build the **Leave Request** solution in Dev (tables, apps, flows).
+3. Add a small **Power BI** report.
+4. Publish a **Power Pages** site for external submission.
+5. Set **DLP**, roles, and **Pipeline** to move to Prod.
+
+If you want, say **“export this as a file”**, and I’ll give you a downloadable `.md` copy.
